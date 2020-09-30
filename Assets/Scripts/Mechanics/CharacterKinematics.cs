@@ -63,10 +63,8 @@ namespace Pink.Mechanics
 			}
 		}
 
-
 		public void Move(float move, bool crouch, bool jump)
 		{
-
 			//only control the player if grounded or airControl is turned on
 			if (m_Grounded || m_AirControl)
 			{

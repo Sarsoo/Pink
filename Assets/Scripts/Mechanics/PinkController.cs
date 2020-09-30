@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Pink.Environment;
+using Pink.Graphics;
+using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine;
 
 namespace Pink.Mechanics
@@ -10,6 +10,9 @@ namespace Pink.Mechanics
         public CharacterKinematics controller;
         public Animator animator;
         public Health health;
+        public Flash flash;
+
+        public bool controlAllowed = true;
 
         public float runSpeed = 40f;
         float horizontalMovement = 0f;
@@ -48,11 +51,18 @@ namespace Pink.Mechanics
             {
                 animator.SetTrigger("hurt");
             }
+            StartCoroutine(Simulation.GetModel<EnvironmentModel>().virtualCamera.GetComponent<Shake>().Run(400f, 6f, 9f));
+            StartCoroutine(flash.Run(3, 60, 60, 1f));
         }
 
         public void WasHealed()
         {
             animator.SetTrigger("");
+        }
+
+        public void WasKilled()
+        {
+            animator.SetBool("dead", true);
         }
     }
 }
