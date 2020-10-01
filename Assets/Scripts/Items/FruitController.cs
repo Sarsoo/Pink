@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using Pink.Mechanics;
 
 namespace Pink.Items
@@ -14,6 +15,8 @@ namespace Pink.Items
             if (userController != null)
             {
                 animator.SetTrigger("collected");
+                Collect();
+                SceneManager.LoadScene("second");
             }
         }
 
