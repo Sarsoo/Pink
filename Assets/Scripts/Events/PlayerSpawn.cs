@@ -1,6 +1,8 @@
 ﻿using Pink.Environment;
 
-namespace Pink.Timeline
+using static Pink.Environment.Simulation;
+
+namespace Pink.Events
 {
     public class PlayerSpawn : Simulation.Event<PlayerSpawn>
     {
@@ -8,16 +10,17 @@ namespace Pink.Timeline
 
         public override void Execute()
         {
-            //player.collider2d.enabled = true;
             state.player.controlAllowed = true;
+            state.player.collider2d.enabled = true;
 
             state.player.health.Reset();
-            //state.player.Teleport(state.spawnPoint.transform.position);
+            state.player.controller.Teleport(state.spawnPoint.transform.position);
             
             state.player.animator.SetBool("dead", false);
             state.virtualCamera.m_Follow = state.player.transform;
             state.virtualCamera.m_LookAt = state.player.transform;
-            //Simulation.Schedule<EnablePlayerInput>(2f);
+
+            // Schedule<EnableControl>(2f);
         }
     }
 }

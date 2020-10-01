@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TMPro;
 
 namespace Pink.Environment
 {
@@ -26,5 +27,9 @@ namespace Pink.Environment
         /// </summary>
         public Transform spawnPoint;
 
+        /// <summary>
+        /// Health display UI element
+        /// </summary>
+        public TextMeshProUGUI healthDisplay;
     }
 }

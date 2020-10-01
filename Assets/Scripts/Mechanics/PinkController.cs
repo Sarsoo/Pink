@@ -1,13 +1,17 @@
 ﻿using Pink.Environment;
 using Pink.Graphics;
-using UnityEngine.Experimental.Rendering.Universal;
+using Pink.Events;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
+
+using static Pink.Environment.Simulation;
 
 namespace Pink.Mechanics
 {
     public class PinkController : MonoBehaviour
     {
         public CharacterKinematics controller;
+        public Collider2D collider2d;
         public Animator animator;
         public Health health;
         public Flash flash;
@@ -27,11 +31,14 @@ namespace Pink.Mechanics
         // Update is called once per frame
         void Update()
         {
-            horizontalMovement = Input.GetAxisRaw("Horizontal") * runSpeed;
-
-            if (Input.GetButtonDown("Jump"))
+            if (controlAllowed)
             {
-                jump = true;
+                horizontalMovement = Input.GetAxisRaw("Horizontal") * runSpeed;
+
+                if (Input.GetButtonDown("Jump"))
+                {
+                    jump = true;
+                }
             }
         }
 
@@ -63,6 +70,7 @@ namespace Pink.Mechanics
         public void WasKilled()
         {
             animator.SetBool("dead", true);
+            Schedule<PlayerDeath>();
         }
     }
 }

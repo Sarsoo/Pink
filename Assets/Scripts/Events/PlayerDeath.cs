@@ -1,24 +1,26 @@
 ﻿using Pink.Environment;
+using UnityEngine;
 
-namespace Pink.Timeline
+using static Pink.Environment.Simulation;
+
+namespace Pink.Events
 {
-    class PlayerDeath : Simulation.Event
+    class PlayerDeath : Simulation.Event<PlayerDeath>
     {
         EnvironmentModel state = Simulation.GetModel<EnvironmentModel>();
         
         public override void Execute()
         {
-            if (state.player.health.IsAlive)
+            if (!state.player.health.IsAlive)
             {
-                state.player.health.Die();
+                Debug.Log("Player Died");
                 state.player.controlAllowed = false;
+                state.player.collider2d.enabled = false;
 
                 state.virtualCamera.m_Follow = null;
                 state.virtualCamera.m_LookAt = null;
 
-                state.player.animator.SetTrigger("hurt");
-                state.player.animator.SetBool("dead", true);
-                //Simulation.Schedule<PlayerSpawn>(2);
+                Schedule<PlayerSpawn>(2);
             }
         }
     }

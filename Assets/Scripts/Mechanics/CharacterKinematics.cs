@@ -111,6 +111,22 @@ namespace Pink.Mechanics
 			animator.SetFloat("velocityY", m_Rigidbody2D.velocity.y);
 		}
 
+		public void Teleport(Vector3 position)
+        {
+            m_Rigidbody2D.position = position;
+            m_Velocity *= 0;
+            m_Rigidbody2D.velocity *= 0;
+        }
+
+		public void Bounce()
+		{
+			Bounce(0.8f);
+		}
+
+		public void Bounce(float multiplier)
+		{
+			m_Rigidbody2D.velocity *= multiplier * -1;
+		}
 
 		private void Flip()
 		{

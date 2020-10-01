@@ -30,7 +30,7 @@ namespace Pink.Environment
 
         void Update()
         {
-            //if (Instance == this) Environment.Tick();
+            if (Instance == this) Simulation.Tick();
         }
     }
 }

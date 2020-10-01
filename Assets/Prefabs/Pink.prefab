@@ -228,7 +228,7 @@ MonoBehaviour:
   - {x: -0.24555969, y: -0.4249635, z: 0}
   m_ShapePathHash: 1518933887
   m_Mesh: {fileID: 0}
-  m_InstanceId: -161710
+  m_InstanceId: 32918
 --- !u!70 &607263385546436226
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -258,6 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 7691372070587086485}
+  collider2d: {fileID: 607263385546436226}
   animator: {fileID: 6698281393096328332}
   health: {fileID: 5976345916529560159}
   flash: {fileID: 145711148100088082}

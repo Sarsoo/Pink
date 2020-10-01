@@ -62,7 +62,7 @@ namespace Pink.Mechanics
             return CurrentHealth == MaxHealth;
         }
 
-        public void Die()
+        public void Kill()
         {
             if (IsAlive)
             {
