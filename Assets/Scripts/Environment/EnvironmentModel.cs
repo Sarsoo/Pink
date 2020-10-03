@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using TMPro;
+using Pink.UI;
+using Pink.Items;
 
 namespace Pink.Environment
 {
@@ -28,8 +29,13 @@ namespace Pink.Environment
         public Transform spawnPoint;
 
         /// <summary>
-        /// Health display UI element
+        /// The HUD controller for the scene.
         /// </summary>
-        public TextMeshProUGUI healthDisplay;
+        public HUDController hud;
+
+        /// <summary>
+        /// Item manager for collectibles in the scene.
+        /// </summary>
+        public ItemManager items;
     }
 }

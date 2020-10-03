@@ -1,0 +1,13 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: melon
+  m_Controller: {fileID: 9100000, guid: 32d2d166b13f7b5419e11d7c6e4851b3, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: e45793a1d087d924ca09910fdd8d4844, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 08d8c6633b8f5da178ede76ec5d25346, type: 2}

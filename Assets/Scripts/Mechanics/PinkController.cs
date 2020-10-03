@@ -8,6 +8,10 @@ using static Pink.Environment.Simulation;
 
 namespace Pink.Mechanics
 {
+    [RequireComponent(typeof(CharacterKinematics))]
+    [RequireComponent(typeof(Collider2D))]
+    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(Health))]
     public class PinkController : MonoBehaviour
     {
         public CharacterKinematics controller;
@@ -18,6 +22,7 @@ namespace Pink.Mechanics
 
         public bool controlAllowed = true;
 
+        [Min(0)]
         public float runSpeed = 40f;
         float horizontalMovement = 0f;
         bool jump = false;
@@ -31,23 +36,21 @@ namespace Pink.Mechanics
         // Update is called once per frame
         void Update()
         {
-            if (controlAllowed)
-            {
-                horizontalMovement = Input.GetAxisRaw("Horizontal") * runSpeed;
+            horizontalMovement = controlAllowed ? Input.GetAxisRaw("Horizontal") * runSpeed : 0;
 
-                if (Input.GetButtonDown("Jump"))
-                {
-                    jump = true;
-                }
+            if (Input.GetButtonDown("Jump") && controlAllowed)
+            {
+                jump = true;
             }
         }
 
         private void FixedUpdate()
         {
-            controller.Move(horizontalMovement * Time.fixedDeltaTime, false, jump);
+            controller.Move(horizontalMovement * Time.fixedDeltaTime, jump);
             jump = false;
         }
 
+        // Animation and graphic updates triggered primarily by health component
         public void WasHurt()
         {
             if (health.IsDead)
@@ -58,15 +61,16 @@ namespace Pink.Mechanics
             {
                 animator.SetTrigger("hurt");
             }
-            StartCoroutine(Simulation.GetModel<EnvironmentModel>().virtualCamera.GetComponent<Shake>().Run(400f, 6f, 9f));
-            StartCoroutine(flash.Run(3, 60, 60, 1f));
+            if(flash != null) StartCoroutine(flash.Run(3, 60, 60, 1f));
         }
 
+        // Animation and graphic updates triggered primarily by health component
         public void WasHealed()
         {
             animator.SetTrigger("");
         }
 
+        // Animation, graphic updates and death event scheduling triggered primarily by health component
         public void WasKilled()
         {
             animator.SetBool("dead", true);

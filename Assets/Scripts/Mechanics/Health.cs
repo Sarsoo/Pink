@@ -6,6 +6,7 @@ namespace Pink.Mechanics
 {
     public class Health : MonoBehaviour
     {
+        [Min(0)]
         public float MaxHealth = 10f;
 
         [Header("Events")]
@@ -16,7 +17,7 @@ namespace Pink.Mechanics
         public UnityEvent WasKilled;
 
         private float currentHealth;
-        float CurrentHealth {
+        public float CurrentHealth {
             get => currentHealth;
             set => currentHealth = Math.Min(
                                         Math.Max(0f, value), 
@@ -48,16 +49,9 @@ namespace Pink.Mechanics
             return Hurt(MaxHealth / 5);
         }
 
-        public bool Heal(float increment)
+        public bool Heal(float increment = 1)
         {
             CurrentHealth += increment;
-            WasHealed.Invoke();
-            return CurrentHealth == MaxHealth;
-        }
-
-        public bool Heal()
-        {
-            CurrentHealth = MaxHealth;
             WasHealed.Invoke();
             return CurrentHealth == MaxHealth;
         }

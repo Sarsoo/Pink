@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Pink.Environment
 {
@@ -31,6 +32,12 @@ namespace Pink.Environment
         void Update()
         {
             if (Instance == this) Simulation.Tick();
+        }
+
+        void LoadLevel(string levelName)
+        {
+            Debug.Log($"Loading level {levelName}");
+            SceneManager.LoadScene(levelName);
         }
     }
 }

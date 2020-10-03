@@ -1,6 +1,8 @@
 ﻿using Pink.Environment;
-
+using Pink.Items;
 using static Pink.Environment.Simulation;
+
+using UnityEngine;
 
 namespace Pink.Events
 {
@@ -19,6 +21,9 @@ namespace Pink.Events
             state.player.animator.SetBool("dead", false);
             state.virtualCamera.m_Follow = state.player.transform;
             state.virtualCamera.m_LookAt = state.player.transform;
+
+            state.hud.Reset();
+            state.items.ResetItems();
 
             // Schedule<EnableControl>(2f);
         }
