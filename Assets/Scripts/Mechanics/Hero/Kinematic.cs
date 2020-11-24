@@ -22,6 +22,7 @@ namespace Pink.Mechanics
         /// <summary>
         /// The current velocity of the entity.
         /// </summary>
+        [HideInInspector]
         public Vector2 velocity;
 
         /// <summary>
@@ -32,7 +33,7 @@ namespace Pink.Mechanics
 
         protected Vector2 targetVelocity;
         protected Vector2 groundNormal;
-        protected Rigidbody2D body;
+        public Rigidbody2D body;
         protected ContactFilter2D contactFilter;
         protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
 
@@ -169,7 +170,7 @@ namespace Pink.Mechanics
                     distance = modifiedDistance < distance ? modifiedDistance : distance;
                 }
             }
-            body.position = body.position + move.normalized * distance;
+            body.position += move.normalized * distance;
         }
 
     }

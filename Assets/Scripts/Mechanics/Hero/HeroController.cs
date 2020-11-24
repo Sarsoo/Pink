@@ -16,6 +16,10 @@ namespace Pink.Mechanics
         /// </summary>
         public float jumpTakeOffSpeed = 7;
 
+        public Animator animator;
+        public HeroInput input;
+        private System.Random random;
+
         public JumpState jumpState = JumpState.Grounded;
         private bool stopJump;
         /*internal new*/
@@ -26,7 +30,6 @@ namespace Pink.Mechanics
         bool jump;
         Vector2 move;
         SpriteRenderer spriteRenderer;
-        internal Animator animator;
 
         public Bounds Bounds => collider2d.bounds;
 
@@ -37,25 +40,86 @@ namespace Pink.Mechanics
             collider2d = GetComponent<Collider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
+
+            input = new HeroInput();
+            random = new System.Random();
+
+            input.Player.Move.performed += ctx => OnMove(ctx);
+            input.Player.Jump.performed += ctx => OnJump(ctx);
+            input.Player.Attack.performed += ctx => OnAttack(ctx);
+            input.Player.Block.performed += ctx => OnBlock(ctx);
+            input.Player.Roll.performed += ctx => OnRoll(ctx);
+        }
+        private void OnEnable()
+        {
+            input.Enable();
         }
 
-        // Update is called once per frame
-        protected override void Update()
+        private void OnDisable()
+        {
+            input.Disable();
+        }
+
+        public void OnMove(InputAction.CallbackContext context)
         {
             if (controlEnabled)
             {
-                move.x = Input.GetAxis("Horizontal");
-                if (jumpState == JumpState.Grounded && Input.GetButtonDown("Jump"))
-                    jumpState = JumpState.PrepareToJump;
-                else if (Input.GetButtonUp("Jump"))
-                {
-                    stopJump = true;
-                }
+                move.x = context.ReadValue<Vector2>().x;
+                animator.SetFloat("", move.x);
+                Debug.Log("Moving: " + move.x);
             }
             else
             {
                 move.x = 0;
             }
+            
+        }
+
+        public void OnJump(InputAction.CallbackContext context)
+        {
+            if (jumpState == JumpState.Grounded)
+                jumpState = JumpState.PrepareToJump;
+            
+            // stopJump = true; on up
+
+            Debug.Log("Jumping");
+            animator.SetTrigger("Jump");
+        }
+
+        public void OnAttack(InputAction.CallbackContext context)
+        {
+            int attackNumber = random.Next(1, 4);
+            animator.SetTrigger("Attack" + attackNumber.ToString());
+        }
+
+        public void OnBlock(InputAction.CallbackContext context)
+        {
+            animator.SetTrigger("Block");
+        }
+
+        public void OnRoll(InputAction.CallbackContext context)
+        {
+            Debug.Log("Rolling");
+            animator.SetTrigger("Roll");
+        }
+
+        // Update is called once per frame
+        protected override void Update()
+        {
+            //if (controlEnabled)
+            //{
+            //    move.x = Input.GetAxis("Horizontal");
+            //    if (jumpState == JumpState.Grounded && Input.GetButtonDown("Jump"))
+            //        jumpState = JumpState.PrepareToJump;
+            //    else if (Input.GetButtonUp("Jump"))
+            //    {
+            //        stopJump = true;
+            //    }
+            //}
+            //else
+            //{
+            //    move.x = 0;
+            //}
             UpdateJumpState();
             base.Update();
         }
